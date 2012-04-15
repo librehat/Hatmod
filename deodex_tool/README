@@ -1,0 +1,15 @@
+Authour: @librehat
+Twitter: @librehat
+Web Site: http://www.librehat.com
+
+English:
+You should have the access to write files under this directory and your working directory.
+Put all files in /sysmte/app to "app" directory and /system/framwork to "framework" directory.
+Suggestion:
+	Also make a copy of framework to "bootclasspathdir" directory. More technical details, please see the project "smali".
+
+简体中文/Simplified Chinese:
+你应该有本目录和工作目录（支持在其它目录下执行本脚本）的写入权限。
+将/system/app下的全部文件放入app目录，将/system/framework下的放入framework目录。
+建议：
+	复制一份framework的内容到bootclasspathdir目录。关于更多技术细节，请查阅smali项目。

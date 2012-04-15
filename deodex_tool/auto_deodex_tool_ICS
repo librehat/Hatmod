@@ -1,0 +1,104 @@
+#!/bin/bash
+
+#Variables
+IFS=:
+bcd=`dirname $0`/bootclasspathdir
+option="Deodex and merge System apps:Deodex and merge System frameworks:Help:Quit"
+ver="0.1.2"
+tools=`dirname $0`/tools
+appdir=`dirname $0`/app/
+fwkdir=`dirname $0`/framework/
+
+#Function Section
+function merge             #Merge classes.dex and jar or apk file.
+{
+	if zip -q $zname classes.dex ;then
+		echo "$zname merged."
+		rm -rf out
+		rm -f classes.dex
+		rm -f $oname
+	else
+		echo "$zname merge failed."
+		exit 1
+	fi
+}
+
+function dex             #Generate the classes.dex file.
+{
+	if smali -a 15 out -o classes.dex ;then
+		merge
+	else
+		echo "$fname: Smali failed."
+		exit 1
+	fi
+}
+
+function autodeodex       #Begin with deodex the odex file.
+{
+	if [ -d out ];then   #Delete the existed out directory
+		rm -rf out
+	fi
+	if baksmali -a 15 $oname -x -d $bcd ;then
+		dex
+	else
+		echo "Deodexing $oname failed."
+		exit 1
+	fi
+}
+
+function search     #Get the filename.
+{
+	find $appdir -name *.odex | while read rname ;do
+		fname=${rname%%.odex}
+		oname=$rname
+		zname=${fname}.apk
+		autodeodex
+	done
+}
+
+function search_fwk   #Get the filename (framework)
+{
+	find $fwkdir -name *.odex | while read rname ;do
+		fname=${rname%%.odex}
+		oname=$rname
+		zname=${fname}.jar
+		autodeodex
+	done
+}
+
+function usage_ek     #Output help information.
+{
+	echo "Put /System/framework and /System/app in this directory."
+	echo "You can put bootclasspath jars in bootclasspathdir directory."
+	echo "Then, run this wrapper and choose the function you desire."
+	echo "However, this wrapper won't make a back up for you."
+	echo "Remember keep a copy of ROM yourself before any operation."
+	echo
+}
+
+function menu
+{
+	select sel in $option ;do
+		if [ $sel ];then
+			case $sel in
+				*ps )#apps
+					search;;
+				*ks )#frameworks
+					search_fwk;;
+				Help ) usage_ek;;
+				Quit ) exit;;
+			esac
+		else
+			echo "Invalid Number"
+		fi
+	done
+}
+
+#Main
+echo
+echo "Auto deodex tool for Android ICS."
+echo "Version: ${ver}"
+echo "Written by @librehat"
+echo
+export PATH=$PATH:$tools
+menu

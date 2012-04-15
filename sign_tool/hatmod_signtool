@@ -1,0 +1,76 @@
+#!/bin/bash
+
+IFS=:
+option="Extract update.zip:Compress and sign"
+
+function extract
+{
+	if [ ! -e update.zip ];then
+		echo "ERROR: No update.zip found."
+		echo "You need put the update.zip file in this directory at first."
+		exit 1
+	fi
+	echo "Extracting..."
+	if [ -d Temp ];then
+		rm -rf Temp
+	fi
+	mkdir Temp
+	if unzip -q update.zip -d Temp;then
+		echo "Extracted."
+	else
+		echo "ERROR occurs when unzip the update.zip"
+	fi
+}
+
+function compressnsign
+{
+	if [ ! -d Temp ] || [ ! -r Temp ];then
+		echo "Error while attempting to read Temp"
+		exit 1
+	fi
+	echo "Compressing..."
+	if [ -e a.zip ];then
+		rm -f a.zip
+	fi
+	if zip -1 -q a.zip -r Temp ;then
+		echo "Signing..."
+		if [ -e update_signed.zip ];then
+			rm -f update_signed.zip
+		fi
+		java -Xmx999m -jar other/signapk.jar -w other/testkey.x509.pem other/testkey.pk8 a.zip update_signed.zip
+		rm -f a.zip
+		echo "Done."
+	else
+		echo "ERROR occurs while compressing."
+	fi
+}
+
+function sel
+{
+	select selection in $option;do
+		if [ $selection ];then
+			break
+		else
+			echo Invalid number.
+		fi
+	done
+}
+
+echo "Ramos Sign Tools for Linux"
+echo
+echo "Wrapper writer: @librehat"
+echo "My Blog: http://librehat.blogspot.com"
+echo "       : http://www.librehat.com"
+echo
+echo "Now, please choose a function."
+echo
+
+sel
+
+if [ $selection = "Extract update.zip" ];then
+	extract
+elif [ $selection = "Compress and sign" ];then
+	compressnsign
+else
+	echo "UNKNOWN ERROR"
+fi
