@@ -32,7 +32,7 @@ function compressnsign
 	if [ -e a.zip ];then
 		rm -f a.zip
 	fi
-	if zip -1 -q a.zip -r Temp ;then
+	if `cd Temp && zip -1 -q ../a.zip -r *` ;then
 		echo "Signing..."
 		if [ -e update_signed.zip ];then
 			rm -f update_signed.zip
