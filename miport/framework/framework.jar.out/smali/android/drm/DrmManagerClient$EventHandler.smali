@@ -1,0 +1,308 @@
+.class Landroid/drm/DrmManagerClient$EventHandler;
+.super Landroid/os/Handler;
+.source "DrmManagerClient.java"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Landroid/drm/DrmManagerClient;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x2
+    name = "EventHandler"
+.end annotation
+
+
+# instance fields
+.field final synthetic this$0:Landroid/drm/DrmManagerClient;
+
+
+# direct methods
+.method public constructor <init>(Landroid/drm/DrmManagerClient;Landroid/os/Looper;)V
+    .registers 3
+    .parameter
+    .parameter "looper"
+
+    .prologue
+    .line 117
+    iput-object p1, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    .line 118
+    invoke-direct {p0, p2}, Landroid/os/Handler;-><init>(Landroid/os/Looper;)V
+
+    .line 119
+    return-void
+.end method
+
+
+# virtual methods
+.method public handleMessage(Landroid/os/Message;)V
+    .registers 12
+    .parameter "msg"
+
+    .prologue
+    const/4 v9, 0x0
+
+    .line 122
+    const/4 v3, 0x0
+
+    .line 123
+    .local v3, event:Landroid/drm/DrmEvent;
+    const/4 v2, 0x0
+
+    .line 124
+    .local v2, error:Landroid/drm/DrmErrorEvent;
+    new-instance v0, Ljava/util/HashMap;
+
+    invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
+
+    .line 126
+    .local v0, attributes:Ljava/util/HashMap;,"Ljava/util/HashMap<Ljava/lang/String;Ljava/lang/Object;>;"
+    iget v6, p1, Landroid/os/Message;->what:I
+
+    packed-switch v6, :pswitch_data_cc
+
+    .line 154
+    const-string v6, "DrmManagerClient"
+
+    new-instance v7, Ljava/lang/StringBuilder;
+
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v8, "Unknown message type "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    iget v8, p1, Landroid/os/Message;->what:I
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-static {v6, v7}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 163
+    :cond_27
+    :goto_27
+    return-void
+
+    .line 128
+    :pswitch_28
+    iget-object v1, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
+
+    check-cast v1, Landroid/drm/DrmInfo;
+
+    .line 129
+    .local v1, drmInfo:Landroid/drm/DrmInfo;
+    iget-object v6, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    iget-object v7, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-static {v7}, Landroid/drm/DrmManagerClient;->access$000(Landroid/drm/DrmManagerClient;)I
+
+    move-result v7
+
+    invoke-static {v6, v7, v1}, Landroid/drm/DrmManagerClient;->access$100(Landroid/drm/DrmManagerClient;ILandroid/drm/DrmInfo;)Landroid/drm/DrmInfoStatus;
+
+    move-result-object v5
+
+    .line 131
+    .local v5, status:Landroid/drm/DrmInfoStatus;
+    const-string v6, "drm_info_status_object"
+
+    invoke-virtual {v0, v6, v5}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 132
+    const-string v6, "drm_info_object"
+
+    invoke-virtual {v0, v6, v1}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 134
+    if-eqz v5, :cond_87
+
+    const/4 v6, 0x1
+
+    iget v7, v5, Landroid/drm/DrmInfoStatus;->statusCode:I
+
+    if-ne v6, v7, :cond_87
+
+    .line 135
+    new-instance v3, Landroid/drm/DrmEvent;
+
+    .end local v3           #event:Landroid/drm/DrmEvent;
+    iget-object v6, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-static {v6}, Landroid/drm/DrmManagerClient;->access$000(Landroid/drm/DrmManagerClient;)I
+
+    move-result v6
+
+    iget-object v7, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    iget v8, v5, Landroid/drm/DrmInfoStatus;->infoType:I
+
+    invoke-static {v7, v8}, Landroid/drm/DrmManagerClient;->access$200(Landroid/drm/DrmManagerClient;I)I
+
+    move-result v7
+
+    invoke-direct {v3, v6, v7, v9, v0}, Landroid/drm/DrmEvent;-><init>(IILjava/lang/String;Ljava/util/HashMap;)V
+
+    .line 157
+    .end local v1           #drmInfo:Landroid/drm/DrmInfo;
+    .end local v5           #status:Landroid/drm/DrmInfoStatus;
+    .restart local v3       #event:Landroid/drm/DrmEvent;
+    :goto_5c
+    iget-object v6, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-static {v6}, Landroid/drm/DrmManagerClient;->access$500(Landroid/drm/DrmManagerClient;)Landroid/drm/DrmManagerClient$OnEventListener;
+
+    move-result-object v6
+
+    if-eqz v6, :cond_71
+
+    if-eqz v3, :cond_71
+
+    .line 158
+    iget-object v6, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-static {v6}, Landroid/drm/DrmManagerClient;->access$500(Landroid/drm/DrmManagerClient;)Landroid/drm/DrmManagerClient$OnEventListener;
+
+    move-result-object v6
+
+    iget-object v7, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-interface {v6, v7, v3}, Landroid/drm/DrmManagerClient$OnEventListener;->onEvent(Landroid/drm/DrmManagerClient;Landroid/drm/DrmEvent;)V
+
+    .line 160
+    :cond_71
+    iget-object v6, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-static {v6}, Landroid/drm/DrmManagerClient;->access$600(Landroid/drm/DrmManagerClient;)Landroid/drm/DrmManagerClient$OnErrorListener;
+
+    move-result-object v6
+
+    if-eqz v6, :cond_27
+
+    if-eqz v2, :cond_27
+
+    .line 161
+    iget-object v6, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-static {v6}, Landroid/drm/DrmManagerClient;->access$600(Landroid/drm/DrmManagerClient;)Landroid/drm/DrmManagerClient$OnErrorListener;
+
+    move-result-object v6
+
+    iget-object v7, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-interface {v6, v7, v2}, Landroid/drm/DrmManagerClient$OnErrorListener;->onError(Landroid/drm/DrmManagerClient;Landroid/drm/DrmErrorEvent;)V
+
+    goto :goto_27
+
+    .line 138
+    .restart local v1       #drmInfo:Landroid/drm/DrmInfo;
+    .restart local v5       #status:Landroid/drm/DrmInfoStatus;
+    :cond_87
+    if-eqz v5, :cond_9d
+
+    iget v4, v5, Landroid/drm/DrmInfoStatus;->infoType:I
+
+    .line 139
+    .local v4, infoType:I
+    :goto_8b
+    new-instance v2, Landroid/drm/DrmErrorEvent;
+
+    .end local v2           #error:Landroid/drm/DrmErrorEvent;
+    iget-object v6, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-static {v6}, Landroid/drm/DrmManagerClient;->access$000(Landroid/drm/DrmManagerClient;)I
+
+    move-result v6
+
+    iget-object v7, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-static {v7, v4}, Landroid/drm/DrmManagerClient;->access$300(Landroid/drm/DrmManagerClient;I)I
+
+    move-result v7
+
+    invoke-direct {v2, v6, v7, v9, v0}, Landroid/drm/DrmErrorEvent;-><init>(IILjava/lang/String;Ljava/util/HashMap;)V
+
+    .line 142
+    .restart local v2       #error:Landroid/drm/DrmErrorEvent;
+    goto :goto_5c
+
+    .line 138
+    .end local v4           #infoType:I
+    :cond_9d
+    invoke-virtual {v1}, Landroid/drm/DrmInfo;->getInfoType()I
+
+    move-result v4
+
+    goto :goto_8b
+
+    .line 145
+    .end local v1           #drmInfo:Landroid/drm/DrmInfo;
+    .end local v5           #status:Landroid/drm/DrmInfoStatus;
+    :pswitch_a2
+    iget-object v6, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    iget-object v7, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-static {v7}, Landroid/drm/DrmManagerClient;->access$000(Landroid/drm/DrmManagerClient;)I
+
+    move-result v7
+
+    invoke-static {v6, v7}, Landroid/drm/DrmManagerClient;->access$400(Landroid/drm/DrmManagerClient;I)I
+
+    move-result v6
+
+    if-nez v6, :cond_be
+
+    .line 146
+    new-instance v3, Landroid/drm/DrmEvent;
+
+    .end local v3           #event:Landroid/drm/DrmEvent;
+    iget-object v6, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-static {v6}, Landroid/drm/DrmManagerClient;->access$000(Landroid/drm/DrmManagerClient;)I
+
+    move-result v6
+
+    const/16 v7, 0x3e9
+
+    invoke-direct {v3, v6, v7, v9}, Landroid/drm/DrmEvent;-><init>(IILjava/lang/String;)V
+
+    .restart local v3       #event:Landroid/drm/DrmEvent;
+    goto :goto_5c
+
+    .line 148
+    :cond_be
+    new-instance v2, Landroid/drm/DrmErrorEvent;
+
+    .end local v2           #error:Landroid/drm/DrmErrorEvent;
+    iget-object v6, p0, Landroid/drm/DrmManagerClient$EventHandler;->this$0:Landroid/drm/DrmManagerClient;
+
+    invoke-static {v6}, Landroid/drm/DrmManagerClient;->access$000(Landroid/drm/DrmManagerClient;)I
+
+    move-result v6
+
+    const/16 v7, 0x7d7
+
+    invoke-direct {v2, v6, v7, v9}, Landroid/drm/DrmErrorEvent;-><init>(IILjava/lang/String;)V
+
+    .line 151
+    .restart local v2       #error:Landroid/drm/DrmErrorEvent;
+    goto :goto_5c
+
+    .line 126
+    :pswitch_data_cc
+    .packed-switch 0x3e9
+        :pswitch_a2
+        :pswitch_28
+    .end packed-switch
+.end method
