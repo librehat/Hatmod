@@ -13,3 +13,6 @@ Device: Ramos W6HD Android tablet
 PC    : Lenovo Z465A laptop
 OS    : GNU/Linux
 Shell : bash
+
+TODO:
+Transport framework.jar, android.policy.jar, services.jar and framework-res.apk to patchrom (MIUI).
