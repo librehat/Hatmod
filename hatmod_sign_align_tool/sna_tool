@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#Variables
+ver="0.1.0"
+
+#Function Section
+function sign  #sign the apk file
+{
+	if java -jar signapk.jar testkey.x509.pem testkey.pk8 ${aname}.apk ${aname}_signed.apk;then
+	  echo
+	else
+	  echo "Sign ${aname}.apk failed."
+	fi
+}
+
+function align  #align the apk file
+{
+	if zipalign -f 4 ${aname}_signed.apk ${oname}.apk;then
+		echo
+	else
+		echo "Align ${aname}_signed.apk failed."
+	fi
+}
+
+function begin
+{
+	find apk-in/*.apk | while read rname ;do
+	  aname=${rname%%.apk}
+	  sign
+	  oname=apk-out${aname:6}
+	  align
+	  rm -f ${aname}_signed.apk
+	done
+}
+
+#Main
+echo
+echo "Apk files auto sign and align too using public testkeys."
+echo "Version: ${ver}"
+echo "Written by @librehat"
+echo
+
+begin
