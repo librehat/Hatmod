@@ -34,10 +34,13 @@ function compressnsign
 	fi
 	if `cd Temp && zip -1 -q ../a.zip -r *` ;then
 		echo "Signing..."
-		if [ -e update_signed.zip ];then
-			rm -f update_signed.zip
+		if [ -e update.zip ];then
+			if [ -e udpate_orig.zip ];then
+				rm -f update_orig.zip
+			fi
+			mv update.zip update_orig.zip
 		fi
-		java -Xmx999m -jar other/signapk.jar -w other/testkey.x509.pem other/testkey.pk8 a.zip update_signed.zip
+		java -Xmx999m -jar other/signapk.jar -w other/testkey.x509.pem other/testkey.pk8 a.zip update.zip
 		rm -f a.zip
 		echo "Done."
 	else
@@ -59,8 +62,7 @@ function sel
 echo "Ramos Sign Tools for Linux"
 echo
 echo "Wrapper writer: @librehat"
-echo "My Blog: http://librehat.blogspot.com"
-echo "       : http://www.librehat.com"
+echo "My Blog : http://www.librehat.co.cc"
 echo
 echo "Now, please choose a function."
 echo
