@@ -1,15 +1,19 @@
 Authour: @librehat
 Twitter: @librehat
-Web Site: http://www.librehat.com
+Web Site: http://www.librehat.co.cc
 
 English:
 You should have the access to write files under this directory and your working directory.
 Put all files in /sysmte/app to "app" directory and /system/framwork to "framework" directory.
 Suggestion:
 	Also make a copy of framework to "bootclasspathdir" directory. More technical details, please see the project "smali".
+You NEED to sign and align all the output apk and jar files after this operation.
+
+NOTICE: Some apk such as Phone.apk and Email.apk couldn't be re-builded by apktool.You can use classical_deodex_tool to merge them.
 
 简体中文/Simplified Chinese:
 你应该有本目录和工作目录（支持在其它目录下执行本脚本）的写入权限。
 将/system/app下的全部文件放入app目录，将/system/framework下的放入framework目录。
 建议：
 	复制一份framework的内容到bootclasspathdir目录。关于更多技术细节，请查阅smali项目。
+全部完成后，请记得用HatMod提供的批量签名优化工具对合并后的文件进行重新签名。

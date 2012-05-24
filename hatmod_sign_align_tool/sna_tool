@@ -1,43 +1,52 @@
 #!/bin/bash
 
 #Variables
-ver="0.1.0"
-
+ver="0.1.1"
+exp=$1
 #Function Section
 function sign  #sign the apk file
 {
-	if java -jar signapk.jar testkey.x509.pem testkey.pk8 ${aname}.apk ${aname}_signed.apk;then
-	  echo
+	if java -jar signapk.jar testkey.x509.pem testkey.pk8 ${aname}.$exp ${aname}_signed.$exp;then
+	  echo "${aname}.$exp signed."
 	else
-	  echo "Sign ${aname}.apk failed."
+	  echo "Sign ${aname}.$exp failed."
 	fi
 }
 
 function align  #align the apk file
 {
-	if zipalign -f 4 ${aname}_signed.apk ${oname}.apk;then
-		echo
+	if zipalign -f 4 ${aname}_signed.$exp ${oname}.$exp;then
+		echo "${aname}_signed.$exp aligned."
 	else
-		echo "Align ${aname}_signed.apk failed."
+		echo "Align ${aname}_signed.$exp failed."
 	fi
 }
 
 function begin
 {
-	find apk-in/*.apk | while read rname ;do
-	  aname=${rname%%.apk}
+	find apk-in/*.${exp} | while read rname ;do
+	  aname=${rname%%.$exp}
 	  sign
 	  oname=apk-out${aname:6}
 	  align
-	  rm -f ${aname}_signed.apk
+	  rm -f ${aname}_signed.$exp
 	done
 }
 
 #Main
 echo
-echo "Apk files auto sign and align too using public testkeys."
+echo "Android files auto sign and align too using public testkeys."
 echo "Version: ${ver}"
 echo "Written by @librehat"
 echo
 
-begin
+if [ -n "$exp" ];then
+	begin
+else
+	echo "ERROR: NO ARGUMENT!"
+	echo
+	echo "For APK files, please add apk argument."
+	echo "./sna_tool apk"
+	echo "For JAR files, please add jar argument."
+	echo "./sna_tool jar"
+fi

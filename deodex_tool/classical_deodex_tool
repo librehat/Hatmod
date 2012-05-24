@@ -2,43 +2,46 @@
 
 #Variables
 IFS=:
-bcd=`dirname $0`/bootclassdir
+bcd=`dirname $0`/bootclasspathdir
 option="Deodex and merge System apps:Deodex and merge System frameworks:Help:Quit"
-ver="0.2.0"
+ver="0.1.2"
 tools=`dirname $0`/tools
 appdir=`dirname $0`/app/
 fwkdir=`dirname $0`/framework/
 
 #Function Section
-function build             #Build the apk file.
+function merge             #Merge classes.dex and jar or apk file.
 {
-	rm -f $zname
-	rm -f $oname
-	if apktool b $fname $zname ;then
-		echo
-		rm -rf $fname
+	if zip -q $zname classes.dex ;then
+		echo "$zname merged."
+		rm -rf out
+		rm -f classes.dex
+		rm -f $oname
 	else
-		echo "$fname: Build failed."
+		echo "$zname merge failed."
 		exit 1
 	fi
 }
 
-function deodex       #deodex the odex file.
+function dex             #Generate the classes.dex file.
 {
-	if baksmali -a 15 $oname -x -d $bcd -o ${fname}/smali;then
-		build
+	if smali -a 15 out -o classes.dex ;then
+		merge
+	else
+		echo "$fname: Smali failed."
+		exit 1
+	fi
+}
+
+function autodeodex       #Begin with deodex the odex file.
+{
+	if [ -d out ];then   #Delete the existed out directory
+		rm -rf out
+	fi
+	if baksmali -a 15 $oname -x -d $bcd ;then
+		dex
 	else
 		echo "Deodexing $oname failed."
-		exit 1
-	fi
-}
-
-function extract
-{
-	if apktool d -f $zname $fname;then
-		deodex
-	else
-		echo "Extract $zname failed."
 		exit 1
 	fi
 }
@@ -49,7 +52,7 @@ function search     #Get the filename.
 		fname=${rname%%.odex}
 		oname=$rname
 		zname=${fname}.apk
-		extract
+		autodeodex
 	done
 }
 
@@ -59,20 +62,18 @@ function search_fwk   #Get the filename (framework)
 		fname=${rname%%.odex}
 		oname=$rname
 		zname=${fname}.jar
-		extract
+		autodeodex
 	done
 }
 
 function usage_ek     #Output help information.
 {
 	echo "Put /System/framework and /System/app in this directory."
-	echo "You can put bootclasspath jars in bootclassdir directory."
+	echo "You can put bootclasspath jars in bootclasspathdir directory."
 	echo "Then, run this wrapper and choose the function you desire."
 	echo "However, this wrapper won't make a back up for you."
 	echo "Remember keep a copy of ROM yourself before any operation."
 	echo
-	echo "After all operations, these files will lose keys and cannot be installed."
-	echo "You need to sign and align them by sign & align tool later."
 }
 
 function menu
