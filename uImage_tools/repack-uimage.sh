@@ -33,5 +33,4 @@ echo "Compressing kernel to LZMA"
 lzma < Image-ext.new > Image.new
 
 echo "Making uImage"
-mkimage -A arm -O linux -T kernel -C lzma -a 80008000 -e 80008000 -d Image.new -n 
-HatModkernel uImage.new
+mkimage -A arm -O linux -T kernel -C lzma -a 80008000 -e 80008000 -d Image.new -n HatModkernel uImage.new
