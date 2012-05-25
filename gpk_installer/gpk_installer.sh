@@ -1,5 +1,5 @@
 #!/bin/sh
-ver="0.1.0"
+ver="0.1.1"
 #Author William Wong (@librehat)
 #License: GPLv3
 file=$1
@@ -29,16 +29,16 @@ function iapk
 function pushdata
 {
 	echo "Copying data files..."
-	dataname=`ls out/ | grep "com."`
+	dataname=`ls out/ | grep Gloft`
 	if [ -n "$dataname" ];then
-		adb push out/$dataname /mnt/sdcard/Android/data/$dataname
+		adb push out/$dataname /mnt/sdcard/gameloft/$dataname
 	else
-		dataname=`ls out/ | grep Gloft`
+		dataname=`ls -F out/ | grep "/$"`
 		if [ -n "$dataname" ];then
-			adb push out/$dataname /mnt/sdcard/gameloft/$dataname
+			adb push out/$dataname /mnt/sdcard/Android/data/$dataname
 		else
 			echo "ERROR: Couldn't recognize the type of data."
-			echo "You need to copy the data files manually."
+			echo "You may need to copy the data files manually."
 			exit 1
 		fi
 	fi
@@ -53,7 +53,7 @@ else
 	echo
 	echo "Usage:"
 	echo "./extract_gpk.sh [gpk filename]"
-	echo "Be patient while extracting, installing and moving."
+	echo "Be patient while extracting, installing and copying."
 	echo "i.e.:"
 	echo "./extract_gpk.sh a_game.gpk"
 	echo
