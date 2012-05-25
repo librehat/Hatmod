@@ -1,0 +1,7 @@
+GPK file is used at muzhiwan website (www.muzhiwan.com) to provide a convenient way to install large games.
+
+Since muzhiwan only provides installer of Windows platform, I write a little script to help you install the gpk file.
+
+Dependencies:
+Android SDK for Linux (At least, you need adb tools).
+unzip
