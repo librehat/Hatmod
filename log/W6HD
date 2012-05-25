@@ -2,7 +2,6 @@
 1. Kernel-level rooted (S-OFF).
 2. Recognized as Galaxy S II. However, some apps are still missing.
 3. GApps upgraded.
-4. Mount SDcard at /mnt/sdcard and NAND at /mnt/sdcard/internal_storage
 
 28-04-2012(HatMod1.7): Two versions of HatMod exist now. 1.7p: move bottom status bar to top. Remove virtual screen buttons. NovaLauncher. Remove launcher2.apk. 1.7(both): GApps updated. Some new sound files. build.prop optimized.
 20-04-2012(HatMod1.6): Customized charging pictures. Fully deodexed.
