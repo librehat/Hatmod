@@ -6,16 +6,12 @@ file=$1
 
 function extract
 {
-	if [ -d out ] && rm -rf out;then
-		echo "Extracting..."
-		if unzip -q $file -d out;then
-			iapk && pushdata
-		else
-			echo "Extract failed."
-			exit 1
-		fi
+	[ -d out ] && `rm -rf out`
+	echo "Extracting..."
+	if unzip -q "$file" -d out;then
+		iapk && pushdata
 	else
-		echo "Abort: Remove out directory failed."
+		echo "Extract failed."
 		exit 1
 	fi
 }
