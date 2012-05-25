@@ -1,0 +1,10 @@
+25-05-2012(HatMod 1.8):
+1. Kernel-level rooted (S-OFF).
+2. Recognized as Galaxy S II. However, some apps are still missing.
+3. GApps upgraded.
+4. Mount SDcard at /mnt/sdcard and NAND at /mnt/sdcard/internal_storage
+
+28-04-2012(HatMod1.7): Two versions of HatMod exist now. 1.7p: move bottom status bar to top. Remove virtual screen buttons. NovaLauncher. Remove launcher2.apk. 1.7(both): GApps updated. Some new sound files. build.prop optimized.
+20-04-2012(HatMod1.6): Customized charging pictures. Fully deodexed.
+14-04-2012(HatMod1.5): Based on official firmware 0406 build. It runs really faster and smoother than ever. Web browsing with GPU accelerated. The /mnt/sdcard is the mount point of NAND and /mnt/sdcard/external_sdcard is the mount point of SD card. Fix the camera problem. Only keep essential GApps in firmware.
+21-03-2012(HatMod1.4): GApps updated to 20120317 version. Replace old boot logo with new one. Replace old boot animation with ICS boot animation. Original keyboard comes back. Remove some unpopular apps.
