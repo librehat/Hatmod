@@ -27,10 +27,16 @@ function pushdata
 	echo "Copying data files..."
 	dataname=`ls -F out/ | grep "/$"`
 	case "$dataname" in
-		"Gloft*")	adb push out/$dataname /mnt/sdcard/gameloft/games/$dataname
-		"*.*.*")	adb push out/$dataname /mnt/sdcard/Android/data/$dataname
-		*)	echo "ERROR: Couldn't recognize the type of data."
-			echo "You may need to copy the data files manually."
+		Gloft*)
+		adb push out/$dataname /mnt/sdcard/gameloft/games/$dataname
+		;;
+		*.*.*)
+		adb push out/$dataname /mnt/sdcard/Android/data/$dataname
+		;;
+		*)
+		echo "ERROR: Couldn't recognize the type of data."
+		echo "You may need to copy the data files manually."
+		;;
 	esac
 }
 
