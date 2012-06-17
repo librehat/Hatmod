@@ -1,3 +1,9 @@
+17-06-2012(HatMod 1.9):
+1. Facelock added.
+2. Change fallback font (Chinese characters) into "lantingxianhei".
+3. Full-function version of Busybox.
+4. Change default wallpaper (HC style).
+
 25-05-2012(HatMod 1.8):
 1. Kernel-level rooted (S-OFF).
 2. Recognized as Galaxy S II. However, some apps are still missing.
