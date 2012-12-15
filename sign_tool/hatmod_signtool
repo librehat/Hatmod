@@ -1,13 +1,24 @@
 #!/bin/bash
+# Ramos Sign Tools for Linux
+# Authour: @librehat
+# My Blog : https://blog-librehat.rhcloud.com
+#
 
-IFS=:
-option="Extract update.zip:Compress and sign"
+if [ ! $2 ] ; then
+  echo "You must specify two parameters!"
+  echo "hatmod_signtool [OPTION] [FILENAME]"
+  echo "OPTIONS: unzip, zip"
+  echo "i.e.    ./hatmod_signtool zip hatmod_2.0_beta5.zip"
+  exit 1
+fi
+option=$1
+filename=$2
 
 function extract
 {
-	if [ ! -e update.zip ];then
-		echo "ERROR: No update.zip found."
-		echo "You need put the update.zip file in this directory at first."
+	if [ ! -e $filename ];then
+		echo "ERROR: No $filename found."
+		echo "You need put the $filename file in this directory at first."
 		exit 1
 	fi
 	echo "Extracting..."
@@ -15,10 +26,10 @@ function extract
 		rm -rf Temp
 	fi
 	mkdir Temp
-	if unzip -q update.zip -d Temp;then
+	if unzip -q $filename -d Temp;then
 		echo "Extracted."
 	else
-		echo "ERROR occurs when unzip the update.zip"
+		echo "ERROR occurs when unzip the $filename"
 	fi
 }
 
@@ -34,13 +45,13 @@ function compressnsign
 	fi
 	if `cd Temp && zip -1 -q ../a.zip -r *` ;then
 		echo "Signing..."
-		if [ -e update.zip ];then
-			if [ -e udpate_orig.zip ];then
-				rm -f update_orig.zip
+		if [ -e $filename ];then
+			if [ -e $filename.bak ];then
+				rm -f $filename.bak
 			fi
-			mv update.zip update_orig.zip
+			mv $filename $filename.bak
 		fi
-		java -Xmx999m -jar other/signapk.jar -w other/testkey.x509.pem other/testkey.pk8 a.zip update.zip
+		java -Xmx999m -jar other/signapk.jar -w other/testkey.x509.pem other/testkey.pk8 a.zip $filename
 		rm -f a.zip
 		echo "Done."
 	else
@@ -48,31 +59,10 @@ function compressnsign
 	fi
 }
 
-function sel
-{
-	select selection in $option;do
-		if [ $selection ];then
-			break
-		else
-			echo Invalid number.
-		fi
-	done
-}
-
-echo "Ramos Sign Tools for Linux"
-echo
-echo "Wrapper writer: @librehat"
-echo "My Blog : http://www.librehat.co.cc"
-echo
-echo "Now, please choose a function."
-echo
-
-sel
-
-if [ $selection = "Extract update.zip" ];then
+if [ $option = "unzip" ];then
 	extract
-elif [ $selection = "Compress and sign" ];then
+elif [ $option = "zip" ];then
 	compressnsign
 else
-	echo "UNKNOWN ERROR"
+	echo "UNKNOWN OPTION"
 fi
