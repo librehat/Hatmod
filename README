@@ -2,14 +2,14 @@ HatMod open-source Android modification project
 
 目前工作环境
 
-目标机器： 蓝魔W6HD
+目标机器： 蓝魔平板电脑
 工作机器： 联想Z465A笔电
-操作系统： ArchLinux
-Shell :  bash
+操作系统： Fedora 17
+Shell  :  bash
 
 Current environment:
 
-Device: Ramos W6HD Android tablet
+Device: Ramos Android tablets
 PC    : Lenovo Z465A laptop
-OS    : ArchLinux
+OS    : Fedora 17
 Shell : bash
