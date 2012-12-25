@@ -5,7 +5,7 @@ find . -print0 | cpio --null -ov --format=newc > ../initramfs.new
 cd ..
 
 echo "GZip Compressing..."
-gzip -9 initramfs.new
+gzip -9 -f initramfs.new
 
 oldsize=`ls -l initramfs.cpio | awk '{ print $5 }'`
 newsize=`ls -l initramfs.new.gz | awk '{ print $5 }'`
