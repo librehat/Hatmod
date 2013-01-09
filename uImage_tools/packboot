@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ -e boot_new.img ]; then
+	rm boot_new.img
+fi
+
+cd out
+
+BASE="0x$(od -A n -h -j 34 -N 2 ../boot.img|sed 's/ //g')0000"
+CMDLINE="$(od -A n --strings -j 64 -N 512 ../boot.img)"
+
+echo "Using base address $BASE"
+echo "Using command line '$CMDLINE'"
+../mkbootfs ./ramdisk | gzip > ramdisk-new.gz
+../mkbootimg --cmdline "$CMDLINE" --base $BASE --kernel ../boot.img-kernel --ramdisk ramdisk-new.gz -o ../boot_new.img

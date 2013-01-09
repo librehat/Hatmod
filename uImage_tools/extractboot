@@ -1,0 +1,17 @@
+#!/bin/bash
+if [ ! -e $1 ]; then
+	echo "Input file does not exist"
+	exit 1;
+fi
+
+if [ -e out ]; then
+	rm -r out
+fi
+
+mkdir out
+./split_bootimg.pl ./$1
+cd out
+
+mkdir ramdisk
+cd ramdisk
+gunzip -c ../../boot.img-ramdisk.gz | cpio -i
