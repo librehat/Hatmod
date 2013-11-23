@@ -1,7 +1,8 @@
 #!/bin/bash
 # Ramos Sign Tools for Linux
 # Authour: @librehat
-# My Blog : https://blog-librehat.rhcloud.com
+# My Blog : https://www.librehat.com
+# My English Blog: http://en.librehat.com
 #
 
 if [ ! $2 ] ; then
